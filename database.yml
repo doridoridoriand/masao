@@ -1,0 +1,15 @@
+db:
+  production:
+    adapter:  mysql2
+    host:     localhost
+    username: dorian
+    password: dorian
+    database: dorian
+
+  development:
+    adapter:  mysql2
+    host:     localhost
+    username: dorian-dev
+    password: dorian-dev
+    database: dorian-dev
+
