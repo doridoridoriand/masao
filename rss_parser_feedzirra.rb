@@ -7,9 +7,9 @@ source_url = "http://www.google.com/alerts/feeds/05546308791182870999/1255701024
 feed =  Feedjira::Feed.fetch_and_parse source_url
 
 p feed.title.force_encoding("UTF-8")
-puts feed.url
-puts feed.entries
-
 entry = feed.entries.first
-puts entry.title
-puts entry.url
+
+feed.entries.each do |entry|
+  puts entry.url
+  puts entry.content
+end
