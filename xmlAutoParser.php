@@ -1,6 +1,6 @@
 <?php
 //parseList.phpに書かれたパース先を順番に読み取って(配列かして、要素を指定して順番に読み取る)、それぞれの定数の名前のファイルに出力
-
+//こいつもううんこだから放棄
 class parseXML {
 
   public function loadXML() {
@@ -23,7 +23,7 @@ class parseXML {
         var_dump($result);
       }
     }
-    //unset($parseListArray);
+    unset($parseListArray);
   }
 }
 
