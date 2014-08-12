@@ -8,8 +8,15 @@ class parseXML {
 		//var_dump($parseScope);
 		for ($i = 0; $i < count($parseScope); $i++) {
 			$xml = simplexml_load_file($parseScope[$i][1]);
-			var_dump($xml);
+			//var_dump($xml);
+			foreach ($xml->entry as $value) {
+        		$result[] = array('title' => (string)$value->title,
+                        		  'link' => (string)$value->link,
+                          		  'updated' => (string)$value->updated
+                          );
+        	}
 		}
+		var_dump($result);
 	}
 
 	private function xmlParseListReader() {
