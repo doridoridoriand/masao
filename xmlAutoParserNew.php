@@ -15,8 +15,10 @@ class parseXML {
                           		  'updated' => (string)$value->updated
                           );
         	}
+        	$fileAccess = fopen('./parseResult/' . $parseScope[$i][0], 'w');
+        	fwrite($fileAccess, serialize($result));
+        	fclose($fileAccess);
 		}
-		var_dump($result);
 	}
 
 	private function xmlParseListReader() {
@@ -26,11 +28,8 @@ class parseXML {
 		while ($parseList = fgetcsv($source)) {
 			array_push($parseListArray, $parseList);
 		}
+		unset($parseList);
 		return $parseListArray;
-	}
-
-	private function contentSaver() {
-		//loadXMLContentから読み取った内容を保存する。
 	}
 }
 
