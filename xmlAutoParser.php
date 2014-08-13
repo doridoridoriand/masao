@@ -1,31 +1,20 @@
 <?php
 //parseList.phpに書かれたパース先を順番に読み取って(配列かして、要素を指定して順番に読み取る)、それぞれの定数の名前のファイルに出力
-//こいつもううんこだから放棄
+//第1引数に保存名、第2引数にパース先のURLを指定する形で実行する
 class parseXML {
 
-  public function loadXML() {
-    //xmlSelectorから渡されたXMLのURLを読み取りパースして、指定の定数値のフィある名で保存する
-    $parseScope = $this->xmlSelector();
-    var_dump($parseScope);
-  }
-
-  private function xmlSelector() {
-    //parseList.csvに書かれたパース先を順番に読み取り、loadXMLに渡す
-    $source = fopen('parseList.csv', 'r');
-    while ($parseListArray = fgetcsv($source)) {
-      $parseContent = simplexml_load_file($parseListArray[1]);
-
-      foreach ($parseContent->entry as $value) {
-        $result[] = array('title' => (string)$value->title,
-                          'link' => (string)$value->link,
-                          'updated' => (string)$value->updated
-                          );
-        var_dump($result);
-      }
+    public function loadXML() {
+      //readParseURLからパース先を読み取って第1引数の名前で保存する
+      $source = $this->readParseURL();
+      //yotta
     }
-    unset($parseListArray);
-  }
+
+    private function readParseURL() {
+      // 実行時に指定された第2引数からURLを読み取り、パース先とする
+      return simplexml_load_file($argv[2]);
+    }
 }
+
 
 $parseXML = new parseXML;
 $parseXML->loadXML();
