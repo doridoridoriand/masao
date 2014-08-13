@@ -12,5 +12,3 @@ class unSerialize {
 
 $unSeriarize = new unSerialize;
 $unSeriarize->unSerialize();
-
-?>

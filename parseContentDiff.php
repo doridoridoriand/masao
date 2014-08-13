@@ -19,5 +19,3 @@ class compareContent {
 
 $compareContent = new compareContent;
 $compareContent->compare($argv[1]);
-
-?>

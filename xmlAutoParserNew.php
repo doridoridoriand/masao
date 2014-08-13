@@ -35,5 +35,3 @@ class parseXML {
 
 $parseXML = new parseXML;
 $parseXML->loadXMLContent();
-
-?>
