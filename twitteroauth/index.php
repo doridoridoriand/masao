@@ -10,11 +10,11 @@ require_once('twitteroauth/twitteroauth.php');
 require_once('config.php');
 
 /* If access tokens are not available redirect to connect page. */
-if (empty($_SESSION['265649845-b4ymqy21JtGO4kNXPQp0KrcU0B6xR2cANPYsAYxe']) || empty($_SESSION['265649845-b4ymqy21JtGO4kNXPQp0KrcU0B6xR2cANPYsAYxe']['oauth_token']) || empty($_SESSION['265649845-b4ymqy21JtGO4kNXPQp0KrcU0B6xR2cANPYsAYxe']['oauth_token_secret'])) {
+if (empty($_SESSION['access_token']) || empty($_SESSION['access_token']['oauth_token']) || empty($_SESSION['access_token']['oauth_token_secret'])) {
     header('Location: ./clearsessions.php');
 }
 /* Get user access tokens out of the session. */
-$access_token = $_SESSION['265649845-b4ymqy21JtGO4kNXPQp0KrcU0B6xR2cANPYsAYxe'];
+$access_token = $_SESSION['access_token'];
 
 /* Create a TwitterOauth object with consumer/user tokens. */
 $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oauth_token'], $access_token['oauth_token_secret']);
@@ -23,12 +23,11 @@ $connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token['oau
 $content = $connection->get('account/verify_credentials');
 
 /* Some example calls */
-var_dump($connection->get('users/show', array('screen_name' => 'doridoridoriand')));
-var_dump($connection->post('statuses/update', array('status' => date(DATE_RFC822))));
-//$connection->post('statuses/destroy', array('id' => 265649845));
-//var_dump($connection->post('friendships/create', array('id' => 265649845)));
-
+//$connection->get('users/show', array('screen_name' => 'abraham'));
+//$connection->post('statuses/update', array('status' => date(DATE_RFC822)));
+//$connection->post('statuses/destroy', array('id' => 5437877770));
+//$connection->post('friendships/create', array('id' => 9436992));
 //$connection->post('friendships/destroy', array('id' => 9436992));
 
 /* Include HTML to display on the page */
-//include('html.inc');
+include('html.inc');
