@@ -8,7 +8,7 @@
 
 define(VIEWS_PATH, './');
 
-class navigationController {
+class navigationHelper {
 
 	public function navigate() {
 		$menuCount = $this->pagesCounter();
@@ -19,7 +19,7 @@ class navigationController {
 			print_r($pageLinksArray[$i]);
 			echo '">';
 			print_r(str_replace('.php', '', (str_replace('./', '', $pageLinksArray[$i]))));
-			echo '</li>';
+			echo '</a></li>';
 		}
 	}
 
@@ -56,5 +56,4 @@ class navigationController {
 	}
 }
 
-$navigationController = new navigationController;
-//$navigationController->navigate();
+$navigationHelper = new navigationHelper;
