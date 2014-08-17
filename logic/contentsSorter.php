@@ -2,7 +2,20 @@
 //parseResultディレクトリに入っているパース結果のファイル名を指定されたら、
 //コンテンツ要素のupdatedの日付を見て、contentSolterを実行した日付と合致する要素の配列を返す
 
-class contentSorter {
+class contentReader {
+
+
+	/* unSerializeより受け取ったファイルの内容全てをHTMLに変換する
+	*/
+	public function allContent($contentName) {
+		$this->unserialize($contentName);
+	}
+
+	/* findLatestContent()より受け取った最新記事をHTMLに変換する
+	*/
+	public function latestContent($contentName) {
+		$this->findLatestContent($contentName);
+	}
 
 	/* unSerializeより受け取ったファイルの内容のupdatedの日付と実行時のマシンの日付と比較して、
 	一致する要素があったら配列として返す
@@ -10,7 +23,7 @@ class contentSorter {
 	@param デシリアライズしたファイルの内容
 	@return 条件に合致した要素を含んだ配列
 	*/
-	public function sorter($contentName) {
+	private function findLatestContent($contentName) {
 		$contentData = $this->unSerialize($contentName);
 
 		foreach ($contentData as $value) {
@@ -28,13 +41,12 @@ class contentSorter {
 	　　@return コンテンツ内容の配列
 	*/
 	private function unSerialize($contentName) {
-		$source = fopen('./parseResult/' . $contentName, 'r');
-		$content = fread($source, filesize('./parseResult/' . $contentName));
+		$source = fopen('../parseResult/' . $contentName, 'r');
+		$content = fread($source, filesize('../parseResult/' . $contentName));
 		$phpArray = unserialize($content);
 		fclose($source);
 		return $phpArray;
 	}
 }
 
-$contentSorter = new contentSorter;
-$contentSorter->sorter($argv[1]);
+$contentReader = new contentReader;
