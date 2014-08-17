@@ -13,7 +13,7 @@ echo '
 
     <link href="./assets/bootstrap-3.2.0-dist/css/bootstrap.css" rel="stylesheet">
     <link href="css/dorian.css" rel="stylesheet">
-    <link href="css/pygments-manni.css" rel="stylesheet">
+    <link href="./assets/pygments-manni.css" rel="stylesheet">
     <style type="text/css">
       body {
         padding-botton: 40px;
@@ -39,7 +39,7 @@ echo '
         </div>
         <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
           <ul class="nav navbar-nav">';
-          $navigationController->navigate();
+          $navigationHelper->navigate();
           echo '
           </ul>
         </nav>
