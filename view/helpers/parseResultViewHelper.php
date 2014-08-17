@@ -1,37 +1,73 @@
 <?php
 //パースした結果をパース先に分けて表示
 
+require('../../logic/contentsSorter.php');
+
 class parseResultViewHelper {
 
+	/* parseListGeneratorから渡された配列をHTMLに変換する
+	*/
+	public function parseListHTMLConverter() {
+		$parseList = $this->parseListGenerator();
 
-	private function loadParseContent() {
-
+		foreach ($parseList as $element) {
+			echo '<li>';
+			echo '<a href="#';
+			print_r($element);
+			echo '">';
+			print_r($element);
+			echo '</a>';
+			echo '</li>';
+		}
 	}
 
-	/* view側で何のパースした結果を押されているかを判定し、それを受け取ったら
-	　　　parseResultに格納されている該当するパース結果を読み込む
+	/* loadParseContentから受け取ったコンテンツの配列をHTMLに変換する
 	*/
-	private function parseContentSelector() {
+	public function parseContentHTMLConverter($contentName, $AllorLatestFlag) {
+		$parseListArray = $this->loadParseContent($contentName, $AllorLatestFlag);
+		foreach ($parseListArray as $element) {
+			echo '<tr>';
+			echo '<td>';
+			print($element[0]);
+			echo '</td><td>';
+			print($element[1]);
+			echo '</a>';
+			echo '</td>';
+			echo '</tr>';
+		}
+	}
 
+	/* contentSorter.phpからallContent()もしくはlatestContent()のどちらかを使用してコンテンツの内容を取得する。
+	　　　どちらかを使用するかは$AllorLatestFlagを使用して判定する
+	　　　ねむい
+	*/
+	private function loadParseContent($contentName, $AllorLatestFlag) {
+		$contentReader = new contentReader;
+
+		if($AllorLatestFlag == 'ALL') {
+			$source = $contentReader->allContent($contentName);
+		} elseif ($AllorLatestFlag == 'LATEST') {
+			$source = $contentReader->latestContent($contentName);
+		}
+		return $source;
 	}
 
 	/* サイドバーにパースリスト表示する用のhelper関数
 	   parseResultにあるファイル数を確認してそのパースした結果を配列として返す
 	   parseList.csvから読み込んだ結果では無くあくまで実際にクロール出来た結果を用いる
 	*/
-	public function parseListGenerator() {
+	private function parseListGenerator() {
 		$parseContentCountResult = array();
-		$scanDirectoryArray = scandir('../../parseResult/');
+		$scanDirectoryArray = scandir('../parseResult/');
 
 		foreach($scanDirectoryArray as $element) {
-			if (is_file('../../parseResult/' . $element)) {
+			if (is_file('../parseResult/' . $element)) {
 				array_push($parseContentCountResult, $element);
 			}
 		}
-		var_dump($parseContentCountResult);
-
+		return $parseContentCountResult;
 	}
 }
 
 $parseResultViewHelper = new parseResultViewHelper;
-$parseResultViewHelper->parseListGenerator();
+$parseResultViewHelper->parseContentHTMLConverter($argv[1], 'ALL');

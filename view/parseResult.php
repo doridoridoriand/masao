@@ -4,6 +4,8 @@
 */
 
 require('./elements/header.php');
+require('./helpers/parseResultViewHelper.php');
+
 //sidebar
 echo '
 <div class="container-fluid">
@@ -11,9 +13,13 @@ echo '
 		<div class="col-sm-3 col-md-2 sidebar">
 			<ul class="nav nav-sidebar">
 			';
+			$parseResultViewHelper->parseListHTMLConverter();
+echo '
+			</ul>
+		</div>';
+
 //main content
 echo '
-<br><br>
-<div class="container">
-<h2 class="sub-header">UNKO</h2>
-';
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main-contents-position">
+			<h1 class="page-header">パースしたコンテンツ</h1>
+		</div>';
