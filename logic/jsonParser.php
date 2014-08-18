@@ -50,7 +50,7 @@ class jsonParser {
 	public function jsonSelector() {
 
 		$targetDirectoryArray = array();
-		$tagetDirectory = scandir('../parseResult/');
+		$tagetDirectory = scandir('../../parseResult/');
 
 		foreach ($tagetDirectory as $element) {
 			if (is_file('../parseResult/' . $element))	{
@@ -64,4 +64,3 @@ class jsonParser {
 }
 
 $jsonParser = new jsonParser;
-$jsonParser->jsonSelector();
