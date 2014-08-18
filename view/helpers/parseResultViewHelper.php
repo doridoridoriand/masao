@@ -44,7 +44,7 @@ class parseResultViewHelper {
 	private function loadParseContent($contentName, $AllorLatestFlag) {
 		$contentReader = new contentReader;
 
-		if($AllorLatestFlag == 'ALL') {
+		if ($AllorLatestFlag == 'ALL') {
 			$source = $contentReader->allContent($contentName);
 		} elseif ($AllorLatestFlag == 'LATEST') {
 			$source = $contentReader->latestContent($contentName);
@@ -60,7 +60,7 @@ class parseResultViewHelper {
 		$parseContentCountResult = array();
 		$scanDirectoryArray = scandir('../parseResult/');
 
-		foreach($scanDirectoryArray as $element) {
+		foreach ($scanDirectoryArray as $element) {
 			if (is_file('../parseResult/' . $element)) {
 				array_push($parseContentCountResult, $element);
 			}
