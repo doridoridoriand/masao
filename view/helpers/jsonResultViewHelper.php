@@ -1,14 +1,33 @@
 <?php
 
-require ('../../logic/jsonParser.php');
+require ('../logic/jsonParser.php');
 
 class jsonResultViewHelper {
 
-	public function loadJSON() {
+	/* loadJSONから渡された配列を要素ごとに分けて、HTMLとして形成する
+	*/
+	public function jsonObjectDevider() {
+		$source = $this->loadJSON();
+
+		foreach ($source as $element) {
+			echo '<tr>';
+			echo '</tr>';
+			echo '<tr>';
+			echo '</tr>';
+			echo '<tr>';
+			echo '</tr>';
+		}
+	}
+
+	/* parseJSONから受け取った配列を読みこむ
+	*/
+	private function loadJSON() {
+		$jsonParser = new jsonParser;
 		$source = $jsonParser->parseJSON();
-		var_dump($source);
+
+		return $source;
 	}
 }
 
 $jsonResultViewHelper = new jsonResultViewHelper;
-$jsonResultViewHelper->loadJSON();
+$jsonResultViewHelper->jsonObjectDevider();

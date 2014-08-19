@@ -14,7 +14,7 @@ class jsonParser {
 
 	public function parseJSON() {
 		$source = $this->contentElementAdjuster(); 
-		return $source;
+		var_dump($source);
 	}
 
 	/* ミニマム機能
@@ -62,5 +62,3 @@ class jsonParser {
 		return $targetDirectoryArray;
 	}
 }
-
-$jsonParser = new jsonParser;

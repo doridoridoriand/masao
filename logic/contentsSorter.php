@@ -48,5 +48,3 @@ class contentReader {
 		return $phpArray;
 	}
 }
-
-$contentReader = new contentReader;
