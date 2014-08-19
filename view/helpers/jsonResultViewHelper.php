@@ -11,6 +11,8 @@ class jsonResultViewHelper {
 
 		foreach ($source as $element) {
 			echo '<tr>';
+			echo '<th>'
+			echo ''
 			echo '</tr>';
 			echo '<tr>';
 			echo '</tr>';
