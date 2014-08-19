@@ -1,7 +1,7 @@
 <?php
 //パースした結果をパース先に分けて表示
 
-require('../../logic/contentsSorter.php');
+require('../logic/contentsSorter.php');
 
 class parseResultViewHelper {
 
