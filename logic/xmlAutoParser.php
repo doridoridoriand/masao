@@ -5,14 +5,14 @@ class parseXML {
 
 	/*パース先のXMLから必要な情報を持ってきてシリアライズ化して保存する
 
-	　　readParseURLからパース先を読み取って第1引数の名前で保存する
+	  readParseURLからパース先を読み取って第1引数の名前で保存する
 
-	　　@param string パース内容の保存名称　パース先のURL
+	  @param string パース内容の保存名称,パース先のURL
 	  @return string シリアライズ化したパース内容
 	 */
     public function loadXML($parseURLName, $parseURL) {
       	$source = $this->readParseURL($parseURL);
-    
+
       	foreach ($source->entry as $value) {
       		$parseResult[] = array('title'    => (string)$value->title,
       								'link'    => (string)$value->link,

@@ -38,8 +38,8 @@ class parseResultViewHelper {
 	}
 
 	/* contentSorter.phpからallContent()もしくはlatestContent()のどちらかを使用してコンテンツの内容を取得する。
-	　　　どちらかを使用するかは$AllorLatestFlagを使用して判定する
-	　　　ねむい
+	   どちらかを使用するかは$AllorLatestFlagを使用して判定する
+	   ねむい
 	*/
 	private function loadParseContent($contentName, $AllorLatestFlag) {
 		$contentReader = new contentReader;

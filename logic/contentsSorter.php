@@ -37,8 +37,8 @@ class contentReader {
 
 	/* 第一引数からファイル名を読み取り、ファイルの内容をphpの配列に戻す
 
-	　　@param ファイル名
-	　　@return コンテンツ内容の配列
+	   @param ファイル名
+	   @return コンテンツ内容の配列
 	*/
 	private function unSerialize($contentName) {
 		$source = fopen('../parseResult/' . $contentName, 'r');
