@@ -8,13 +8,13 @@ class contentReader {
 	/* unSerializeより受け取ったファイルの内容全てをHTMLに変換する
 	*/
 	public function allContent($contentName) {
-		$this->unserialize($contentName);
+		return $this->unserialize($contentName);
 	}
 
 	/* findLatestContent()より受け取った最新記事をHTMLに変換する
 	*/
 	public function latestContent($contentName) {
-		$this->findLatestContent($contentName);
+		return $this->findLatestContent($contentName);
 	}
 
 	/* unSerializeより受け取ったファイルの内容のupdatedの日付と実行時のマシンの日付と比較して、
