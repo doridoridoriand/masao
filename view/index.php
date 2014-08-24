@@ -4,8 +4,8 @@
    - パース先一覧
    - いつ実行したか
 */
-require('./elements/header.php');
-require('./helpers/parseListViewHelper.php');
+require ('./elements/header.php');
+require ('./helpers/parseListViewHelper.php');
 
 echo '
 <div class="container">

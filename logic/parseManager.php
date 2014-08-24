@@ -16,7 +16,6 @@ class parseManager {
 			$parseXML = new parseXML;
 			$parseXML->loadXML($saveName, $parseURL);
 		}
-
 	}
 	
 	/* parseList.csvを読み取り、要素二つを引数とする
