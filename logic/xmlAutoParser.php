@@ -14,14 +14,19 @@ class parseXML {
       	$source = $this->readParseURL($parseURL);
 
       	foreach ($source->entry as $value) {
-      		$parseResult[] = array('title'    => (string)$value->title,
-      								'link'    => (string)$value->link,
-      								'updated' => (string)$value->updated
+          //var_dump(strval((object)$value->link['href'][0]));
+          
+      		$parseResult[] = array('title'   => (string)$value->title,
+                                 'content' => (string)$value->content,
+      								           'link'    => strval((object)$value->link['href'][0]),
+      								           'updated' => (string)$value->updated
       								);
       	}
-      	$fileAccess = fopen('./parseResult/' . $parseURLName, 'w');
+
+      	$fileAccess = fopen('../parseResult/' . $parseURLName, 'w');
       	fwrite($fileAccess, serialize($parseResult));
       	fclose($fileAccess);
+
     }
 
     /*実行時に指定された第2引数からURLを読み取る
@@ -32,9 +37,6 @@ class parseXML {
       @return string パース後のオブジェクト
     */
     private function readParseURL($parseURL) {
-      return simplexml_load_file($parseURL);
+      return simplexml_load_file($parseURL, 'SimpleXMLElement', LIBXML_NOCDATA);
     }
 }
-
-//$parseXML = new parseXML;
-//$parseXML->loadXML($argv[1], $argv[2]);
