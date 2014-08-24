@@ -5,7 +5,8 @@ require('../logic/contentsSorter.php');
 
 class parseResultViewHelper {
 
-	/* parseListGeneratorから渡された配列をHTMLに変換する
+	/* parseListGeneratorから渡された配列をHTMLに変換する。
+	   サイドバー用のヘルパー関数
 	*/
 	public function parseListHTMLConverter() {
 		$parseList = $this->parseListGenerator();
@@ -25,13 +26,22 @@ class parseResultViewHelper {
 	*/
 	public function parseContentHTMLConverter($contentName, $AllorLatestFlag) {
 		$parseListArray = $this->loadParseContent($contentName, $AllorLatestFlag);
+		//var_dump($parseListArray);
 		foreach ($parseListArray as $element) {
+			//var_dump($element);
+			//echo '<br>';
 			echo '<tr>';
 			echo '<td>';
-			print($element[0]);
+			print($element['title']);
 			echo '</td><td>';
-			print($element[1]);
-			echo '</a>';
+			print($element['content']);
+			echo '</td><td><button type="button" class="btn btn-default"><a href="';
+			print($element['link']);
+			echo '" target="_blank"> ';
+			echo 'リンク先へ';
+			echo '</a></button>';
+			echo '</td><td>';
+			print($element['updated']);
 			echo '</td>';
 			echo '</tr>';
 		}
@@ -46,10 +56,11 @@ class parseResultViewHelper {
 
 		if ($AllorLatestFlag == 'ALL') {
 			$source = $contentReader->allContent($contentName);
+			return $source;
 		} elseif ($AllorLatestFlag == 'LATEST') {
 			$source = $contentReader->latestContent($contentName);
+			return $source;
 		}
-		return $source;
 	}
 
 	/* サイドバーにパースリスト表示する用のhelper関数
@@ -70,4 +81,3 @@ class parseResultViewHelper {
 }
 
 $parseResultViewHelper = new parseResultViewHelper;
-$parseResultViewHelper->parseContentHTMLConverter($argv[1], 'ALL');

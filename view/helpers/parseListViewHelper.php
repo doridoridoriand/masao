@@ -28,7 +28,7 @@ class parseListViewHelper {
 
 	/* parseList.csv から読み込んだパース先をphpの配列に変換する
 	*/
-	private function loadParseList() {
+	public function loadParseList() {
 		$source = fopen('../parseList.csv', 'r');
 		$parseListArray = array();
 
