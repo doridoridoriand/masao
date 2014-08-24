@@ -21,7 +21,7 @@ class parseManager {
 	/* parseList.csvを読み取り、要素二つを引数とする
 	*/
 	private function loadParseList() {
-		$source = fopen('parseList.csv', 'r');
+		$source = fopen('../parseList.csv', 'r');
 		$parseListArray = array();
 
 		while ($parseList = fgetcsv($source)) {
