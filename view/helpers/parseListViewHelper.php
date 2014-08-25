@@ -21,7 +21,12 @@ class parseListViewHelper {
 			print($element[1]);
 			echo '</a>';
 			echo '</td>';
+			echo '<td>';
+			echo '<h4><span class="label label-danger">';
+			echo 'ENGAGED';
+			echo '</span></h4></td>';
 			echo '</tr>';
+			;
 		}
 
 	}

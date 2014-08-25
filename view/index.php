@@ -16,6 +16,7 @@ echo '
 				<tr>
 					<th>保存名称</th>
 					<th>rssのURL</th>
+					<th>クローラー稼働状況</th>
 				</tr>
 			</thead>
 			<tbody>';
