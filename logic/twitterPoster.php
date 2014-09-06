@@ -8,15 +8,15 @@ require('./contentsSorter.php');
 
 class twitterPoster {
 
-	public function poster($contentName) {
+	public function poster($contentName, $sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret) {
 		$apiURL = 'https://api.twitter.com/1.1/statuses/update.json';
 
 		$tweetContentArray = $this->tweetContentArrayGenerator($contentName);
-		$twObj = $this->twitterConfigure();
+		$twObj = $this->twitterConfigure($sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret);
 		//$tweetContent = $tweetContentArray[0];
 		for ($i = 0; $i < count($tweetContentArray); $i++) {
 			$tweetContent = $tweetContentArray[$i];
-			$twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent));		
+			var_dump($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent)));		
 		}
 	}
 
@@ -71,17 +71,8 @@ class twitterPoster {
 	}
 
 	//設定項目
-	//テストアカウント用。本番は引数に入れ込んでアカウントごとにキーを入れ替える
-	private function twitterConfigure() {	
-		$sConsumerKey = "wQweDmqn5P8VVudjllUTdwvP8";
-		$sConsumerSecret = "Ru3q3ezT1slKEldcHK1By8kmG781Sc0UjTfRIF0v7DHW2u45q2";
-		$sAccessToken = "265649845-b4ymqy21JtGO4kNXPQp0KrcU0B6xR2cANPYsAYxe";
-		$sAccessTokenSecret = "2933lzh85hDHzhJb9hhwLiCHMePA5h5IQFT43qvGMY2XH";
-
+	private function twitterConfigure($sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret) {	
 		$twObj = new TwitterOAuth($sConsumerKey,$sConsumerSecret,$sAccessToken,$sAccessTokenSecret);
 		return $twObj;
 	}
 }
-$twitterposter = new twitterPoster;
-//$twitterposter->tweetContentArrayGenerator(COSTCO);
-$twitterposter->poster(COSTCO);
