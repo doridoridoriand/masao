@@ -3,13 +3,25 @@
 require_once('./twitteroauth/twitteroauth.php');
 require('./contentsSorter.php');
 //実装する機能
-//contentsSorterから受け取った最新記事の配列をentryごとに、Ｔｗｉｔｔｅｒの文面としておかしくないように形成し、
+//contentsSorterから受け取った最新記事の配列をentryごとに、twitterの文面としておかしくないように形成し、
 //twitteContentの形で変数に入れる
 
 class twitterPoster {
 
+	public function poster($contentName) {
+		$apiURL = 'https://api.twitter.com/1.1/statuses/update.json';
+
+		$tweetContentArray = $this->tweetContentArrayGenerator($contentName);
+		$twObj = $this->twitterConfigure();
+		//$tweetContent = $tweetContentArray[0];
+		for ($i = 0; $i < count($tweetContentArray); $i++) {
+			$tweetContent = $tweetContentArray[$i];
+			$twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent));		
+		}
+	}
+
 	//contentSorterから受け取った配列を分解して、content項目とlinkをを取り出して、つぶやく内容とする
-	public function tweetContentArrayGenerator($contentName) {
+	private function tweetContentArrayGenerator($contentName) {
 		$source = $this->contentArrayMerger($contentName);
 		$newArray = array();
 
@@ -21,7 +33,7 @@ class twitterPoster {
 	}
 
 	//記事のオリジナルの配列とregulatorから渡されたURLの配列をマージする
-	public function contentArrayMerger($contentName) {
+	private function contentArrayMerger($contentName) {
 		$newContentArray = array();
 		$newContentArrayElement = array();
 
@@ -67,7 +79,9 @@ class twitterPoster {
 		$sAccessTokenSecret = "2933lzh85hDHzhJb9hhwLiCHMePA5h5IQFT43qvGMY2XH";
 
 		$twObj = new TwitterOAuth($sConsumerKey,$sConsumerSecret,$sAccessToken,$sAccessTokenSecret);
+		return $twObj;
 	}
 }
 $twitterposter = new twitterPoster;
-$twitterposter->tweetContentArrayGenerator(COSTCO);
+//$twitterposter->tweetContentArrayGenerator(COSTCO);
+$twitterposter->poster(COSTCO);
