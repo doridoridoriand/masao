@@ -48,3 +48,5 @@ class contentReader {
 		return $phpArray;
 	}
 }
+//$contentReader = new contentReader;
+//$contentReader->latestContent($argv[1]);1

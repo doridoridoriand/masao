@@ -2,7 +2,7 @@
 //そもそもこれはパースする段階で行う処理なわけですが、パース先がアレなので、万が一の事を考えてオリジナルURLを残しておくことにしました
 //こいつは単純にコンテンツ内部に内包されているURLからgoogle.comにいったんリダイレクトされるのを防止するために、URL文字列から省くだけの
 //クラスを作成しただけです
-//当たり前だけどgoogleAlert専用です
+//当たり前だけどgoogleAlert専用です。
 
 class contentsURLRegulator {
 
@@ -16,7 +16,7 @@ class contentsURLRegulator {
 			$adjustedArray = explode('&ct=ga&cd=', $rowArray);
 			//var_dump($adjustedArray[0]);
 		}
-		return $adjustedArray[0];
+		var_dump($adjustedArray[0]);
 	}
 
 	/* 本来こいつをパーシャル化するべきだよね。オレマジでうんこ
@@ -31,4 +31,4 @@ class contentsURLRegulator {
 }
 
 $contentURLRegulator = new contentsURLRegulator;
-$contentURLRegulator->regulator($argv[1]);
+//$contentURLRegulator->regulator($argv[1]);
