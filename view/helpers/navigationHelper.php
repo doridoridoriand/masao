@@ -18,7 +18,7 @@ class navigationHelper {
 			echo '<li><a href="';
 			print_r($pageLinksArray[$i]);
 			echo '">';
-			print_r(str_replace('.php', '', (str_replace('./', '', $pageLinksArray[$i]))));
+			print_r(str_replace('.php', '', (str_replace(VIEWS_PATH, '', $pageLinksArray[$i]))));
 			echo '</a></li>';
 		}
 	}
@@ -49,7 +49,7 @@ class navigationHelper {
 
 		foreach ($scanDirectoryArray as $element) {
 			if (is_file(VIEWS_PATH . $element)) {
-				array_push($directoryScanResult, './' . $element);
+				array_push($directoryScanResult, VIEWS_PATH . $element);
 			}
 		}
 		return $directoryScanResult;

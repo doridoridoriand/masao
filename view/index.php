@@ -9,13 +9,14 @@ require ('./helpers/parseListViewHelper.php');
 
 echo '
 <div class="container">
-	<h2 class="sub-header">現在パースしているGoogle Alert一覧</h2>
+	<h2 class="page-header">現在パースしているGoogle Alert一覧</h2>
 	<div class="table-responsive">
 		<table class="table table-striped">
 			<thead>
 				<tr>
 					<th>保存名称</th>
-					<th>rssのURL</th>
+					<th>RSSのURL</th>
+					<th>RSSの最終取得日時</th>
 					<th>クローラー稼働状況</th>
 				</tr>
 			</thead>
