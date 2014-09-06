@@ -9,7 +9,7 @@ class parseListViewHelper {
 	*/
 	public function parseListConverter() {
 		$parseListArray = $this->loadParseList();
-		var_dump($this->mergeListandTimeStamp());
+		//var_dump($this->mergeListandTimeStamp());
 
 		foreach ($parseListArray as $element) {
 			echo '<tr>';
@@ -50,8 +50,6 @@ class parseListViewHelper {
 		$sourceFilemTime = $this->loadFilemTime();
 
 		for ($i = 0; $i < count($sourceParseList); $i++) {
-			var_dump($sourceParseList[$i]);
-			var_dump($sourceFilemTime[$i]);
 		}
 		//$mergedArray = array_merge($sourceParseList, $sourceFilemTime);
 		//return $mergedArray;
