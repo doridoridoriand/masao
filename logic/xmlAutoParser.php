@@ -3,31 +3,31 @@
 //第1引数に保存名、第2引数にパース先のURLを指定する形で実行する
 class parseXML {
 
-	/*パース先のXMLから必要な情報を持ってきてシリアライズ化して保存する
+  /*パース先のXMLから必要な情報を持ってきてシリアライズ化して保存する
 
-	  readParseURLからパース先を読み取って第1引数の名前で保存する
+    readParseURLからパース先を読み取って第1引数の名前で保存する
 
-	  @param string パース内容の保存名称,パース先のURL
-	  @return string シリアライズ化したパース内容
-	 */
-    public function loadXML($parseURLName, $parseURL) {
-      	$source = $this->readParseURL($parseURL);
+    @param string パース内容の保存名称,パース先のURL
+    @return string シリアライズ化したパース内容
+   */
+  public function loadXML($parseURLName, $parseURL) {
+    $source = $this->readParseURL($parseURL);
 
-      	foreach ($source->entry as $value) {
-          //var_dump(strval((object)$value->link['href'][0]));
-          
-      		$parseResult[] = array('title'   => (string)$value->title,
-                                 'content' => (string)$value->content,
-      								           'link'    => strval((object)$value->link['href'][0]),
-      								           'updated' => (string)$value->updated
-      								);
-      	}
+    foreach ($source->entry as $value) {
+      //var_dump(strval((object)$value->link['href'][0]));
 
-      	$fileAccess = fopen('../parseResult/' . $parseURLName, 'w');
-      	fwrite($fileAccess, serialize($parseResult));
-      	fclose($fileAccess);
-
+      $parseResult[] = array('title'   => (string)$value->title,
+        'content' => (string)$value->content,
+        'link'    => strval((object)$value->link['href'][0]),
+        'updated' => (string)$value->updated
+      );
     }
+
+    $fileAccess = fopen('../parseResult/' . $parseURLName, 'w');
+    fwrite($fileAccess, serialize($parseResult));
+    fclose($fileAccess);
+
+  }
 
     /*実行時に指定された第2引数からURLを読み取る
 
@@ -35,8 +35,8 @@ class parseXML {
 
       @param string パース先のURL
       @return string パース後のオブジェクト
-    */
-    private function readParseURL($parseURL) {
-      return simplexml_load_file($parseURL, 'SimpleXMLElement', LIBXML_NOCDATA);
-    }
+     */
+  private function readParseURL($parseURL) {
+    return simplexml_load_file($parseURL, 'SimpleXMLElement', LIBXML_NOCDATA);
+  }
 }

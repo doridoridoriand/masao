@@ -3,33 +3,33 @@
 include('xmlAutoParser.php');
 
 class parseManager {
-	/* loadParseListから渡された引数を元にxmiAutoParserを実行する 
-	*/
-	public function parserRunnner() {
-		$parseList = $this->loadParseList();
+  /* loadParseListから渡された引数を元にxmiAutoParserを実行する 
+   */
+  public function parserRunnner() {
+    $parseList = $this->loadParseList();
 
-		for ($i = 0; $i < count($parseList); $i++) {
-			$saveName = $parseList[$i][0];
-			$parseURL = $parseList[$i][1];
+    for ($i = 0; $i < count($parseList); $i++) {
+      $saveName = $parseList[$i][0];
+      $parseURL = $parseList[$i][1];
 
-			//xmlAutoParserのメソッドを呼び出し
-			$parseXML = new parseXML;
-			$parseXML->loadXML($saveName, $parseURL);
-		}
-	}
-	
-	/* parseList.csvを読み取り、要素二つを引数とする
-	*/
-	private function loadParseList() {
-		$source = fopen('../parseList.csv', 'r');
-		$parseListArray = array();
+      //xmlAutoParserのメソッドを呼び出し
+      $parseXML = new parseXML;
+      $parseXML->loadXML($saveName, $parseURL);
+    }
+  }
 
-		while ($parseList = fgetcsv($source)) {
-			array_push($parseListArray, $parseList);
-		}
-		unset($parseList);
-		return $parseListArray;
-	}
+  /* parseList.csvを読み取り、要素二つを引数とする
+   */
+  private function loadParseList() {
+    $source = fopen('../parseList.csv', 'r');
+    $parseListArray = array();
+
+    while ($parseList = fgetcsv($source)) {
+      array_push($parseListArray, $parseList);
+    }
+    unset($parseList);
+    return $parseListArray;
+  }
 }
 
 $parseManager = new parseManager;
