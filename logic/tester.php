@@ -14,10 +14,9 @@ class twitterPostSandbox {
   $twObj = new TwitterOAuth('WXxWaBi8w75HEXoYmAXRNg1Z6','w8q7eZtCnnKVg4YLZXjkAXO1LfrsXwuDMY7OqSNfvDnVe7WYzH','2468980268-Fcn699mDMJi5wJkTSMxPoQwgjubJf0BugxaTNH7','uBDLsLBrNTGeVTm0V6PMabJ3VvQc8QtTW9DrWgjO1iPWx');
 
     $source = $this->loadContent($AllorLatest, $contentName);
-    $modifiedSource = strip_tags($source['title']);
-    var_dump($modifiedSource);
+    $modifiedSource = strip_tags($source[3]['title']);
 
-    var_dump($twObj->OAuthRequest($apiURL,"POST",array("status" => $modifiedSource)));
+    var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $modifiedSource))));
   }
 
   #contentsSorterからコンテンツパースしたコンテンツを読み込む。
@@ -32,4 +31,4 @@ class twitterPostSandbox {
   }
 }
 $twitterPostSandbox = new twitterPostSandbox;
-$twitterPostSandbox->sandbox(latest, osaka_osaka);
+$twitterPostSandbox->sandbox(all, osaka_osaka);
