@@ -13,10 +13,10 @@ echo '
 			<table class="table-stripped">
 				<thread>
 					<!-- <tr>
-						<th>うんこ</th>
-						<th>ちんこ</th>
-						<th>まんこ</th>
-						<th>まさお</th>
+						<th>あああ</th>
+						<th>あああ</th>
+						<th>あああ</th>
+						<th>あああ</th>
 					</tr> -->
 				</thread>
 			<tbody>
