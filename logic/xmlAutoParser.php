@@ -37,6 +37,7 @@ class parseXML {
       @return string パース後のオブジェクト
      */
   private function readParseURL($parseURL) {
-    return simplexml_load_file($parseURL, 'SimpleXMLElement', LIBXML_NOCDATA);
+    $parseURLEncoded = utf8_encode(file_get_contents($parseURL));
+    return simplexml_load_string($parseURLEncoded);
   }
 }
