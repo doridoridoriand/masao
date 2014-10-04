@@ -8,13 +8,21 @@ require_once('./twitteroauth/twitteroauth.php');
 
 class twitterPostSandbox {
 
+  public function dateStringer() {
+    $dateString = '';
+    $weekJapanese = array('日曜', '月曜', '火曜', '水曜', '木曜', '金曜', '土曜');
+    $dateString = '【' . date('m/d') . ' ' . $weekJapanese[date('w')] . '】';
+    return $dateString;
+  }
+
   #テスト用アカウントをぶったたく
   public function sandbox($AllorLatest, $contentName) {
   $apiURL = 'https://api.twitter.com/1.1/statuses/update.json';
   $twObj = new TwitterOAuth('WXxWaBi8w75HEXoYmAXRNg1Z6','w8q7eZtCnnKVg4YLZXjkAXO1LfrsXwuDMY7OqSNfvDnVe7WYzH','2468980268-Fcn699mDMJi5wJkTSMxPoQwgjubJf0BugxaTNH7','uBDLsLBrNTGeVTm0V6PMabJ3VvQc8QtTW9DrWgjO1iPWx');
 
     $source = $this->loadContent($AllorLatest, $contentName);
-    $modifiedSource = strip_tags($source[3]['title']);
+    $dateString = $this->dateStringer();
+    $modifiedSource = $dateString . strip_tags($source[3]['title'] . ' ' . $source[3]['link']);
 
     var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $modifiedSource))));
   }
@@ -31,4 +39,5 @@ class twitterPostSandbox {
   }
 }
 $twitterPostSandbox = new twitterPostSandbox;
+//$twitterPostSandbox->dateStringer();
 $twitterPostSandbox->sandbox(all, osaka_osaka);

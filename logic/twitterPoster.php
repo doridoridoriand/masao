@@ -24,9 +24,10 @@ class twitterPoster {
   private function tweetContentArrayGenerator($contentName) {
     $source = $this->contentArrayMerger($contentName);
     $newArray = array();
+    $dateString = $this->dateStringer();
 
     for ($i = 0; $i < count($source); $i++) {
-      $stringElement = strip_tags($source[$i][0]['title']) . ' ' . $source[$i][1];
+      $stringElement = $dateString . strip_tags($source[$i][0]['title']) . ' ' . $source[$i][1];
       array_push($newArray, $stringElement);
     }
     return $newArray;
@@ -63,10 +64,17 @@ class twitterPoster {
     return ($postContentURLRegulatedArray);
   }
 
+  private function dateStringer() {
+    $dateString = '';
+    $weekJapanese = array('日曜', '月曜', '火曜', '水曜', '木曜', '金曜', '土曜');
+    $dateString = '【' . date('m/d') . ' ' . $weekJapanese[date('w')] . '】';
+    return $dateString;
+  }
+
   //contentSorterのwrapperです
   private function postContentProvider($contentName) {
     $contentReader = new contentReader;
-    $source = $contentReader->allContent($contentName);
+    $source = $contentReader->latestContent($contentName);
     return $source;
   }
 
