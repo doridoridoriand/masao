@@ -25,14 +25,16 @@ class contentReader {
    */
   private function findLatestContent($contentName) {
     $contentData = $this->unSerialize($contentName);
+    $latestContetnArray = array();
 
     foreach ($contentData as $value) {
       preg_match('/[0-9]{4}-[0-9]{2}-[0-9]{2}/', $value['updated'], $contentUpdatedDate);
 
       if ($contentUpdatedDate[0] == date('Y-m-d')) {
-        return $value;
+        array_push($latestContetnArray, $value);
       }
     }
+    return $latestContetnArray;
   }
 
   /* 第一引数からファイル名を読み取り、ファイルの内容をphpの配列に戻す
@@ -48,5 +50,5 @@ class contentReader {
     return $phpArray;
   }
 }
-//$contentReader = new contentReader;
-//$contentReader->latestContent($argv[1]);1
+$contentReader = new contentReader;
+$contentReader->latestContent($argv[1]);
