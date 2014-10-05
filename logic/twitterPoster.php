@@ -21,7 +21,7 @@ class twitterPoster {
   }
 
   //contentSorterから受け取った配列を分解して、content項目とlinkをを取り出して、つぶやく内容とする
-  private function tweetContentArrayGenerator($contentName) {
+  public function tweetContentArrayGenerator($contentName) {
     $source = $this->contentArrayMerger($contentName);
     $newArray = array();
     $dateString = $this->dateStringer();
@@ -41,7 +41,7 @@ class twitterPoster {
     $originalContentArray = $this->postContentProvider($contentName);
     $regulatedContentURLArray = $this->regulator($contentName);
 
-    for ($i = 0; $i < count($originalContentArray); $i++) {
+    for ($i = 0; $i < 3; $i++) {
       array_push($newContentArrayElement, $originalContentArray[$i], $regulatedContentURLArray[$i]);
       array_push($newContentArray, $newContentArrayElement);
       array_pop($newContentArrayElement);
@@ -61,7 +61,7 @@ class twitterPoster {
       $adjustedArray = explode('&ct=ga&cd=', $rowArray);
       array_push($postContentURLRegulatedArray, $adjustedArray[0]);
     }
-    return ($postContentURLRegulatedArray);
+    return $postContentURLRegulatedArray;
   }
 
   private function dateStringer() {
