@@ -14,14 +14,14 @@ class twitterPoster {
     $tweetContentArray = $this->tweetContentArrayGenerator($contentName);
     $twObj = $this->twitterConfigure($sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret);
     //$tweetContent = $tweetContentArray[0];
-    for ($i = 0; $i < count($tweetContentArray); $i++) {
+    for ($i = 0; $i < 3; $i++) {
       $tweetContent = $tweetContentArray[$i];
       var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
     }
   }
 
   //contentSorterから受け取った配列を分解して、content項目とlinkをを取り出して、つぶやく内容とする
-  private function tweetContentArrayGenerator($contentName) {
+  public function tweetContentArrayGenerator($contentName) {
     $source = $this->contentArrayMerger($contentName);
     $newArray = array();
     $dateString = $this->dateStringer();
@@ -61,7 +61,7 @@ class twitterPoster {
       $adjustedArray = explode('&ct=ga&cd=', $rowArray);
       array_push($postContentURLRegulatedArray, $adjustedArray[0]);
     }
-    return ($postContentURLRegulatedArray);
+    return $postContentURLRegulatedArray;
   }
 
   private function dateStringer() {

@@ -4,7 +4,6 @@
 
 class contentReader {
 
-
   /* unSerializeより受け取ったファイルの内容全てをHTMLに変換する
    */
   public function allContent($contentName) {
@@ -50,5 +49,5 @@ class contentReader {
     return $phpArray;
   }
 }
-$contentReader = new contentReader;
-$contentReader->latestContent($argv[1]);
+//$contentReader = new contentReader;
+//$contentReader->latestContent($argv[1]);

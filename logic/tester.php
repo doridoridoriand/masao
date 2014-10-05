@@ -3,8 +3,9 @@
 #ツイッターのポスト内容に何か新機能として入れ込みたいときに、現状のクラスを操作するのは色々と危険なので、専用のサンドボックス的なクラスを作成。
 #何かpost内容を検証したい場合は、必ずこのクラスを使用する
 
-require ('./contentsSorter.php');
-require_once('./twitteroauth/twitteroauth.php');
+//require ('./contentsSorter.php');
+require ('./twitterPoster.php');
+//require_once('./twitteroauth/twitteroauth.php');
 
 class twitterPostSandbox {
 
@@ -20,11 +21,22 @@ class twitterPostSandbox {
   $apiURL = 'https://api.twitter.com/1.1/statuses/update.json';
   $twObj = new TwitterOAuth('WXxWaBi8w75HEXoYmAXRNg1Z6','w8q7eZtCnnKVg4YLZXjkAXO1LfrsXwuDMY7OqSNfvDnVe7WYzH','2468980268-Fcn699mDMJi5wJkTSMxPoQwgjubJf0BugxaTNH7','uBDLsLBrNTGeVTm0V6PMabJ3VvQc8QtTW9DrWgjO1iPWx');
 
-    $source = $this->loadContent($AllorLatest, $contentName);
+    //$source = $this->loadContent($AllorLatest, $contentName);
+    $tweetContentArray = $this->callProductionContentArrayGenerator($contentName);
     $dateString = $this->dateStringer();
-    $modifiedSource = $dateString . strip_tags($source[3]['title'] . ' ' . $source[3]['link']);
+    //$modifiedSource = $dateString . strip_tags($source[3]['title'] . ' ' . $source[3]['link']);
 
-    var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $modifiedSource))));
+    for ($i = 0; $i < 3; $i++) {
+      $tweetContent = $tweetContentArray[$i];
+      var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
+    }
+      //var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $modifiedSource))));
+  }
+
+  public function callProductionContentArrayGenerator($contentName) {
+    $twitterPoster = new twitterPoster;
+    $tweetDataString = $twitterPoster->tweetContentArrayGenerator($contentName);
+    return $tweetDataString;
   }
 
   #contentsSorterからコンテンツパースしたコンテンツを読み込む。
@@ -40,4 +52,4 @@ class twitterPostSandbox {
 }
 $twitterPostSandbox = new twitterPostSandbox;
 //$twitterPostSandbox->dateStringer();
-$twitterPostSandbox->sandbox(all, osaka_osaka);
+$twitterPostSandbox->sandbox('latest', 'aichi_nagoya');
