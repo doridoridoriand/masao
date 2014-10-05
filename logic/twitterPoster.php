@@ -67,7 +67,7 @@ class twitterPoster {
   private function dateStringer() {
     $dateString = '';
     $weekJapanese = array('日曜', '月曜', '火曜', '水曜', '木曜', '金曜', '土曜');
-    $dateString = '【' . date('m/d') . ' ' . $weekJapanese[date('w')] . '】';
+    $dateString = '【' . date('m/d') . $weekJapanese[date('w')] . '】';
     return $dateString;
   }
 
