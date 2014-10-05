@@ -14,7 +14,7 @@ class twitterPoster {
     $tweetContentArray = $this->tweetContentArrayGenerator($contentName);
     $twObj = $this->twitterConfigure($sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret);
     //$tweetContent = $tweetContentArray[0];
-    for ($i = 0; $i < count($tweetContentArray); $i++) {
+    for ($i = 0; $i < 3; $i++) {
       $tweetContent = $tweetContentArray[$i];
       var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
     }
@@ -41,7 +41,7 @@ class twitterPoster {
     $originalContentArray = $this->postContentProvider($contentName);
     $regulatedContentURLArray = $this->regulator($contentName);
 
-    for ($i = 0; $i < 3; $i++) {
+    for ($i = 0; $i < count($originalContentArray); $i++) {
       array_push($newContentArrayElement, $originalContentArray[$i], $regulatedContentURLArray[$i]);
       array_push($newContentArray, $newContentArrayElement);
       array_pop($newContentArrayElement);
