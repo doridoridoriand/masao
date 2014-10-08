@@ -16,7 +16,8 @@ class parseXML {
     foreach ($source->entry as $value) {
       //var_dump(strval((object)$value->link['href'][0]));
 
-      $parseResult[] = array('title'   => (string)$value->title,
+      $parseResult[] = array(
+        'title'   => (string)$value->title,
         'content' => (string)$value->content,
         'link'    => strval((object)$value->link['href'][0]),
         'updated' => (string)$value->updated
