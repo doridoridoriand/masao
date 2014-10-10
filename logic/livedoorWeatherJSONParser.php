@@ -16,7 +16,7 @@ class livedoorWeatherJSONParser {
         array_push($contentArray, (array)$value);
       }
     }
-    var_dump($contentArray[0]['city'][0]['id']);
+ //   var_dump($contentArray[0]['city'][0]['id']);
  //   foreach ($contentArray) {
  //     $spotDefinitionListArray[] = array(
  //       ''
