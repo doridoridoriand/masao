@@ -14,8 +14,9 @@ class livedoorWeatherJSONParser {
     foreach ($parsedSource->channel->ldWeather_source->pref as $value) {
       //var_dump($value->city);
       foreach ($value->city as $element) {
-        var_dump($element);
-      }
+        array_push($contentArray, (array)$value);
+      };
+      var_dump($contentArray);
     }
   }
 
