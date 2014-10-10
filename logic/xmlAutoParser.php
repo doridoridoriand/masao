@@ -28,6 +28,7 @@ class parseXML {
     fwrite($fileAccess, serialize($parseResult));
     fclose($fileAccess);
 
+    ///<(\w+):(\w)
   }
 
     /*実行時に指定された第2引数からURLを読み取る
