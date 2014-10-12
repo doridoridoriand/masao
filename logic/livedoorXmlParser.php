@@ -1,11 +1,21 @@
 <?php
+require_once('./livedoorWeatherJSONParser.php');
 
-class livedoorWeatherParser {
+class livedoorWeatherParser extends livedoorWeatherJSONParser {
 
-  public function loadXML($targetURL) {
+  //一時細分区域の番号を入力すると、該当するXMLのURLを返す
+  public function loadDefinitiedXML($targetSpotNumber) {
+    $spotDefinitionListArray = parent::areaMapper();
+    //var_dump($spotDefinitionListArray);
+    for ($i = 0; $i < count($spotDefinitionListArray); $i++) {
+      if ($spotDefinitionListArray[$i]['id'] == $targetSpotNumber) {
+        $matched = preg_replace("/_/", ":", ($spotDefinitionListArray[$i]['source']));
+      }
+    }
+    return $this->loadXML($matched);
   }
 
-  public function generateDisasterXMLAccessURL($targetXML) {
+  private function generateDisasterXMLAccessURL($targetXML) {
   $baseURL = 'http://weather.livedoor.com/forecast/rss/';
 
     //防災情報関連
@@ -34,6 +44,13 @@ class livedoorWeatherParser {
     }
     return var_dump($targetURL);
   }
+
+  private function loadXML($targetURL) {
+    $xmlContentStream = file_get_contents($targetURL);
+    var_dump(simplexml_load_string($xmlContentStream));
+    //return simplexml_load_string($xmlContentStream);
+  }
 }
 $livedoorWeatherParser = new livedoorWeatherParser;
-$livedoorWeatherParser->generateDisasterXMLAccessURL('tsunami');
+//$livedoorWeatherParser->generateDisasterXMLAccessURL('tsunami');
+$livedoorWeatherParser->loadDefinitiedXML('440030');
