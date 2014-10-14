@@ -11,6 +11,8 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
       $this->loadDisasterXML($targetXML);
     } else if ($whichXML == 'spotdefinition') {
       $this->loadSpotDefinitionXML($targetXML);
+    } else if ($whichXML == 'allspotdefinition') {
+      $this->loadAllSpotDefinitedXML();
     }
   }
 
@@ -23,6 +25,7 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
   private function loadSpotDefinitionXML($targetSpot) {
     $source = $this->loadDefinitedXML($targetSpot);
     $weatherItemContents = $source->channel->item;
+
     for ($i = 0; $i < count($weatherItemContents); $i++) {
       $weatherContentsArray[] = array(
         'title' => (string)$weatherItemContents[$i]->title,
@@ -31,7 +34,15 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
       );
     }
     $this->saveParsedContent($targetSpot, $weatherContentsArray);
-    //var_dump($weatherContentsArray);
+  }
+
+  //一時細分区域の定義表に記載されている全ての地域のXMLを読み取り、細分区域の番号のloadspotdefinitionxml()に渡す
+  private function loadAllSpotDefinitedXML() {
+    $spotDefinitionListArray = $this->loadAreaMapper();
+
+    foreach ($spotDefinitionListArray as $element) {
+      $this->loadSpotDefinitionXML($element['id']);
+    }
   }
 
   private function generateDisasterXMLAccessURL($targetXML) {
@@ -65,22 +76,20 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
   }
 
   //一時細分区域の番号を入力すると、該当するXMLのURLを返し、loadXML()に渡す
-  public function loadDefinitedXML($targetSpotNumber) {
-    $spotDefinitionListArray = parent::areaMapper();
+  private function loadDefinitedXML($targetSpotNumber) {
+    $spotDefinitionListArray = $this->loadAreaMapper();
     //var_dump($spotDefinitionListArray);
     for ($i = 0; $i < count($spotDefinitionListArray); $i++) {
       if ($spotDefinitionListArray[$i]['id'] == $targetSpotNumber) {
         $matched = preg_replace("/_/", ":", ($spotDefinitionListArray[$i]['source']));
       }
     }
-    //var_dump($matched);
     return $this->loadXML($matched);
   }
 
   //第一引数にXMLのURLを渡されると、xMLをオブジェクトとして返す
   private function loadXML($targetURL) {
     $xmlContentStream = file_get_contents($targetURL);
-    //var_dump(simplexml_load_string($xmlContentStream));
     return simplexml_load_string($xmlContentStream);
   }
 
@@ -90,8 +99,12 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
     fwrite($fileAccess, serialize($sourceContent));
     fclose($fileAccess);
   }
+
+  private function loadAreaMapper() {
+    $spotDefinitionListArray = parent::areaMapper();
+    return $spotDefinitionListArray;
+  }
 }
 $livedoorWeatherParser = new livedoorWeatherParser;
-//$livedoorWeatherParser->generateDisasterXMLAccessURL('tsunami');
-//$livedoorWeatherParser->loadDefinitiedXML('440030');
-$livedoorWeatherParser->chiefManager('spotdefinition', '440030');
+//$livedoorWeatherParser->chiefManager('spotdefinition', '440030');
+$livedoorWeatherParser->chiefManager('allspotdefinition', NULL);
