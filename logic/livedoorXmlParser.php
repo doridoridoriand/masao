@@ -13,12 +13,26 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
       $this->loadSpotDefinitionXML($targetXML);
     } else if ($whichXML == 'allspotdefinition') {
       $this->loadAllSpotDefinitedXML();
+    } else if ($whichXML == 'alldisaster') {
+      $this->loadAllDisasterXML();
     }
   }
 
   //generateDisasterXMLAccessURL->loadXMLからパースしたXMLを読み取り、つぶやく内容を抽出し、配列として返す
   private function loadDisasterXML($targetXML) {
-    $source = $this->loadXML($targetXML);
+    $source = $this->generateDisasterXMLAccessURL($targetXML);
+    $contentItems = $source->channel->item;
+
+    for ($i = 0; $i < count($contentItems); $i++) {
+      $contentItemsArray[] = array(
+        'title'    => (string)$contentItems[$i]->title,
+        'link'     => (string)$contentItems[$i]->link,
+        'category' => (string)$contentItems[$i]->category,
+        'updated'  => (string)$contentItems[$i]->pubDate
+      );
+    }
+    var_dump($contentItemsArray);
+    $this->saveParsedContent($targetXML, $contentItemsArray);
   }
 
   //loadDefinitedXML->loadXMLからパースしたXMLを読み取り、つぶやく内容を抽出し、配列として返す
@@ -28,11 +42,13 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
 
     for ($i = 0; $i < count($weatherItemContents); $i++) {
       $weatherContentsArray[] = array(
-        'title' => (string)$weatherItemContents[$i]->title,
+        'title'       => (string)$weatherItemContents[$i]->title,
         'description' => (string)$weatherItemContents[$i]->description,
-        'link' => (string)$weatherItemContents[$i]->link
+        'link'        => (string)$weatherItemContents[$i]->link,
+        'updated'     => (string)$weatherItemContents[$i]->pubDate
       );
     }
+    var_dump($weatherContentsArray);
     $this->saveParsedContent($targetSpot, $weatherContentsArray);
   }
 
@@ -42,6 +58,15 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
 
     foreach ($spotDefinitionListArray as $element) {
       $this->loadSpotDefinitionXML($element['id']);
+    }
+  }
+
+  //全ての災害情報のXMLを取得する。loadDisasterXMLに対して順番にXMLを叩く
+  private function loadAllDisasterXML() {
+    $sourceArray = array('earthquake', 'tsunami', 'volucano', 'warn');
+
+    foreach ($sourceArray as $element) {
+      $this->loadDisasterXML($element);
     }
   }
 
@@ -107,4 +132,6 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
 }
 $livedoorWeatherParser = new livedoorWeatherParser;
 //$livedoorWeatherParser->chiefManager('spotdefinition', '440030');
-$livedoorWeatherParser->chiefManager('allspotdefinition', NULL);
+//$livedoorWeatherParser->chiefManager('disaster', 'volucano');
+//$livedoorWeatherParser->chiefManager('allspotdefinition', NULL);
+$livedoorWeatherParser->chiefManager('alldisaster', NULL);
