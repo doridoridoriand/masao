@@ -12,7 +12,7 @@ class parseXML {
    */
   public function loadXML($parseURLName, $parseURL) {
     $source = $this->readParseURL($parseURL);
-    var_dump('rading ' . $parseURLName);
+    var_dump('loaded ' . $parseURLName);
     foreach ($source->entry as $value) {
       //var_dump(strval((object)$value->link['href'][0]));
 
