@@ -103,7 +103,6 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
   //一時細分区域の番号を入力すると、該当するXMLのURLを返し、loadXML()に渡す
   private function loadDefinitedXML($targetSpotNumber) {
     $spotDefinitionListArray = $this->loadAreaMapper();
-    //var_dump($spotDefinitionListArray);
     for ($i = 0; $i < count($spotDefinitionListArray); $i++) {
       if ($spotDefinitionListArray[$i]['id'] == $targetSpotNumber) {
         $matched = preg_replace("/_/", ":", ($spotDefinitionListArray[$i]['source']));
