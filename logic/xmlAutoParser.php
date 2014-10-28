@@ -12,23 +12,24 @@ class parseXML {
    */
   public function loadXML($parseURLName, $parseURL) {
     $source = $this->readParseURL($parseURL);
-    var_dump('loaded ' . $parseURLName);
-    foreach ($source->entry as $value) {
-      //var_dump(strval((object)$value->link['href'][0]));
+    echo "loaded " . $parseURLName . "\n";
+    if ($source->entry) {
+      foreach ($source->entry as $value) {
 
-      $parseResult[] = array(
-        'title'   => (string)$value->title,
-        'content' => (string)$value->content,
-        'link'    => strval((object)$value->link['href'][0]),
-        'updated' => (string)$value->updated
-      );
+        $parseResult[] = array(
+          'title'   => (string)$value->title,
+          'content' => (string)$value->content,
+          'link'    => strval((object)$value->link['href'][0]),
+          'updated' => (string)$value->updated
+        );
+      }
+
+      $fileAccess = fopen('../parseResult/' . $parseURLName, 'w');
+      fwrite($fileAccess, serialize($parseResult));
+      fclose($fileAccess);
+    } else {
+      echo "No Contents \n";
     }
-
-    $fileAccess = fopen('../parseResult/' . $parseURLName, 'w');
-    fwrite($fileAccess, serialize($parseResult));
-    fclose($fileAccess);
-
-    ///<(\w+):(\w)
   }
 
     /*実行時に指定された第2引数からURLを読み取る
@@ -40,6 +41,7 @@ class parseXML {
      */
   private function readParseURL($parseURL) {
     $parseURLEncoded = utf8_encode(file_get_contents($parseURL));
-    return simplexml_load_string($parseURLEncoded);
+    $source = simplexml_load_string($parseURLEncoded);
+    return $source;
   }
 }
