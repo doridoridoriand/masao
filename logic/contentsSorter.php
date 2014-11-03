@@ -23,7 +23,7 @@ class contentReader {
   @return 条件に合致した要素を含んだ配列
    */
   private function findLatestContent($contentName) {
-    $contentData = $this->unSerialize($contentName);
+    $contentData = $this->unSerializer($contentName);
     $latestContetnArray = array();
 
     foreach ($contentData as $value) {
@@ -41,7 +41,7 @@ class contentReader {
      @param ファイル名
      @return コンテンツ内容の配列
    */
-  private function unSerialize($contentName) {
+  private function unSerializer($contentName) {
     $source = fopen('../parseResult/' . $contentName, 'r');
     $content = fread($source, filesize('../parseResult/' . $contentName));
     $phpArray = unserialize($content);

@@ -8,13 +8,22 @@ class livedoorWeatherJSONParser {
     $endpoint = '';
   }
 
+  //市町村コードを引数とし、generateprimarysubdivisionareacode()でアクセス先のAPIを作成->loadweatherjson()で必要なdescriptionを読み取り、
+  //読み取り先のページのリンクを付与して、stringとして返す
+  //市町村コードで指定できない(一時細分区域のような数字になっている)ので、暫定的に一時細分区域のコードを生成する処理をはさんでいる
   public function jsonContentDiscriptionReader($targetCityNumber) {
-    $sourceJSON = $this->loadWeatherJSON($targetCityNumber);
-    //var_dump($sourceJSON->description->text);
+    $sourceJSON = $this->loadWeatherJSON($this->generatePrimarySubdivisionAreaCode($targetCityNumber));
     $contentDescription = $sourceJSON->description->text;
     $contentLink = $sourceJSON->link;
     $modifiedDescription = mb_substr($contentDescription, 0, 100, 'UTF-8') . '…';
-    return $modifiedDescription . " " . $contentLink;
+
+    //var_dump( '【今日の天気】' . $modifiedDescription . " " . $contentLink);
+    return '【今日の天気】' . $modifiedDescription . " " . $contentLink;
+  }
+
+  //機械的に一次細分区域を生成。一次細分区域の番号に一部イレギュラーな部分があるので、これはエラーとして処理する。今は対応出来ない
+  private function generatePrimarySubdivisionAreaCode($targetCityNumber) {
+    return substr($targetCityNumber, 0, strlen($targetCityNumber) - 4) . '0010';
   }
 
   private function loadWeatherJSON($targetCityNumber) {
@@ -53,4 +62,4 @@ class livedoorWeatherJSONParser {
 }
 //$livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
 //$livedoorWeatherJSONParser->apiAccessAdressGenerator();
-//$livedoorWeatherJSONParser->jsonContentDiscriptionReader('011000');
+//$livedoorWeatherJSONParser->jsonContentDiscriptionReader('201000');
