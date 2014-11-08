@@ -14,12 +14,12 @@ class parseListViewHelper {
 		foreach ($parseListArray as $element) {
 			echo '<tr>';
 			echo '<td>';
-			print($element[0]);
+			print($element[1]);
 			echo '</td><td>';
 			echo '<a href="';
-			print($element[1]);
+			print($element[2]);
 			echo '">';
-			print($element[1]);
+			print($element[2]);
 			echo '</a>';
 			echo '</td><td>';
 			echo '</td><td>';
