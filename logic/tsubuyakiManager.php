@@ -31,30 +31,39 @@ class tsubuyakiManager {
   }
 
   private function weatherPoster() {
-    $accountList = $this->loadAccountList();
-    $parseList = $this->loadParseList();
+
+    $masterList = $this->loadMasterAccountList();
+
+    // OLD CODE
+    //$accountList = $this->loadAccountList();
+    //$parseList = $this->loadParseList();
     //var_dump($parseList);
-    foreach ($parseList as $element) {
+
+    //foreach ($parseList as $element) {
       //var_dump($element[0]);
+
       // メモ
       //　本来は市町村コードに基づいてAPIのエンドポイントを生成してJSONを読み取る様な実装にしていたけれど、
       // レスポンスに時間が掛かるのと、本当に全部の天気がとれているのか確認できないので実装を変更。
-      // 元から実装してあったJSONをシリアライズ化して保存するのを利用して
+      // 元から実装してあったJSONをシリアライズ化して保存するのを利用してシリアライズしたファイルを読み込んで
+      //　配信する方式に変更。要するに今のニュースの配信と同じ方法
+
+      // OLD CODE
       //$livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
       //$content = $livedoorWeatherJSONParser->jsonContentDiscriptionReader($element[0]);
-
       //var_dump($accountList);
-      for ($i = 0; $i < count($accountList); $i++) {
+
+      for ($i = 0; $i < count($masterList); $i++) {
         $twitterposter = new twitterPoster;
-        $twitterposter->poster($accountList[$i][0],
-                               $accountList[$i][1],
-                               $accountList[$i][2],
-                               $accountList[$i][3],
-                               $accountList[$i][4],
-                               $parseList[$i][0],
+        $twitterposter->poster($masterList[$i][1],
+                               $masterList[$i][3],
+                               $masterList[$i][4],
+                               $masterList[$i][5],
+                               $masterList[$i][6],
+                               $masterList[$i][0],
                                'weather');
       }
-    }
+    //}
   }
 
   private function loadAccountList() {
@@ -79,8 +88,19 @@ class tsubuyakiManager {
     return $parseListArray;
   }
 
+  private function loadMasterAccountList() {
+    $source = fopen('../masterAccountList.csv', 'r');
+    $masterArray = array();
+
+    while ($element = fgetcsv($source)) {
+      array_push($masterArray, $element);
+    }
+    unset($element);
+    return $masterArray;
+  }
+
 }
 
 $tsubuyakiManager = new tsubuyakiManager;
-$tsubuyakiManager->chiefManager('news');
-//$tsubuyakiManager->chiefManager('weather');
+//$tsubuyakiManager->chiefManager('news');
+$tsubuyakiManager->chiefManager($argv[1]);

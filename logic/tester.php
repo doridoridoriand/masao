@@ -14,7 +14,7 @@ class twitterPostSandbox {
     $dateString = '';
     $weekJapanese = array('日曜', '月曜', '火曜', '水曜', '木曜', '金曜', '土曜');
     $dateString = '【' . date('m/d') . ' ' . $weekJapanese[date('w')] . '】';
-    return '【今日の天気】';
+    return $dateString;
   }
 
   #テスト用アカウントをぶったたく
@@ -47,7 +47,7 @@ class twitterPostSandbox {
     $livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
     $dateString = $this->dateStringer();
     var_dump($dateString);
-    $tweetString = $dateString . $livedoorWeatherJSONParser->jsonContentDiscriptionReader($targetArea);
+    $tweetString = $livedoorWeatherJSONParser->jsonContentDiscriptionReader($targetArea);
     array_push($array, $tweetString);
     return $array;
   }
@@ -66,4 +66,4 @@ class twitterPostSandbox {
 $twitterPostSandbox = new twitterPostSandbox;
 //$twitterPostSandbox->dateStringer();
 //$twitterPostSandbox->sandbox('aichi_nagoya');
-$twitterPostSandbox->sandbox('200010');
+$twitterPostSandbox->sandbox('240010');

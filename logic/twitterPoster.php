@@ -8,11 +8,16 @@ require ('./contentsSorter.php');
 
 class twitterPoster {
 
-  public function poster($contentName, $sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret, $targetArea, $contentVariety) {
+  public function poster($contentName,
+                         $sConsumerKey,
+                         $sConsumerSecret,
+                         $sAccessToken,
+                         $sAccessTokenSecret,
+                         $targetArea,
+                         $contentVariety) {
     $apiURL = 'https://api.twitter.com/1.1/statuses/update.json';
-    //var_dump($contentName);
 
-    if ($contentVariety = 'news') {
+    if ($contentVariety == 'news') {
       $tweetContentArray = $this->tweetContentArrayGenerator($contentName);
     } else if ($contentVariety == 'weather') {
       $tweetContentArray = $this->livedoorJSONContentreader($targetArea);
@@ -21,7 +26,7 @@ class twitterPoster {
     $tweetContent = $tweetContentArray[0];
     for ($i = 0; $i < 3; $i++) {
       $tweetContent = $tweetContentArray[$i];
-      //var_dump($tweetContent);
+      //var_dump($tweetContent[0]);
       //var_dump($twObj);
       var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
     }
@@ -31,9 +36,9 @@ class twitterPoster {
     //var_dump($targetArea);
     $array = array();
     $livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
-    $dateString = $this->dateStringer();
-    //var_dump($dateString);
-    $tweetString = $dateString . $livedoorWeatherJSONParser->jsonContentDiscriptionReader($targetArea);
+    // 日付をつぶやかない事にしたので、ひとまずコメントアウト
+    //$dateString = $this->dateStringer();
+    $tweetString = $livedoorWeatherJSONParser->jsonContentDiscriptionReader($targetArea);
     array_push($array, $tweetString);
     var_dump($array);
     return $array;
