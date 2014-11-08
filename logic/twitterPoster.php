@@ -1,27 +1,46 @@
 <?php
 
-require_once('./twitteroauth/twitteroauth.php');
-require('./contentsSorter.php');
+require_once ('./twitteroauth/twitteroauth.php');
+require ('./contentsSorter.php');
 //実装する機能
 //contentsSorterから受け取った最新記事の配列をentryごとに、twitterの文面としておかしくないように形成し、
 //twitteContentの形で変数に入れる
 
 class twitterPoster {
 
-  public function poster($contentName, $sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret) {
+  public function poster($contentName, $sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret, $targetArea, $contentVariety) {
     $apiURL = 'https://api.twitter.com/1.1/statuses/update.json';
+    //var_dump($contentName);
 
-    $tweetContentArray = $this->tweetContentArrayGenerator($contentName);
+    if ($contentVariety = 'news') {
+      $tweetContentArray = $this->tweetContentArrayGenerator($contentName);
+    } else if ($contentVariety == 'weather') {
+      $tweetContentArray = $this->livedoorJSONContentreader($targetArea);
+    }
     $twObj = $this->twitterConfigure($sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret);
-    //$tweetContent = $tweetContentArray[0];
+    $tweetContent = $tweetContentArray[0];
     for ($i = 0; $i < 3; $i++) {
       $tweetContent = $tweetContentArray[$i];
+      //var_dump($tweetContent);
+      //var_dump($twObj);
       var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
     }
   }
 
+  private function livedoorJSONContentreader($targetArea) {
+    //var_dump($targetArea);
+    $array = array();
+    $livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
+    $dateString = $this->dateStringer();
+    //var_dump($dateString);
+    $tweetString = $dateString . $livedoorWeatherJSONParser->jsonContentDiscriptionReader($targetArea);
+    array_push($array, $tweetString);
+    var_dump($array);
+    return $array;
+  }
+
   //contentSorterから受け取った配列を分解して、content項目とlinkをを取り出して、つぶやく内容とする
-  public function tweetContentArrayGenerator($contentName) {
+  private function tweetContentArrayGenerator($contentName) {
     $source = $this->contentArrayMerger($contentName);
     $newArray = array();
     $dateString = $this->dateStringer();

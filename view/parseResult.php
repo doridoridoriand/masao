@@ -40,11 +40,11 @@ echo '
 
 		foreach ($listArray as $value) {
 			echo '<td id="';
-			print(($value[0]));
+			print(($value[1]));
 			echo '">';
-			print(($value[0]));
+			print(($value[1]));
 			echo '</td>';
-			$parseResultViewHelper->parseContentHTMLConverter($value[0], 'ALL');
+			$parseResultViewHelper->parseContentHTMLConverter($value[1], 'ALL');
 		}
 echo '
 		</div>';		

@@ -6,6 +6,7 @@
 //require ('./contentsSorter.php');
 require ('./twitterPoster.php');
 //require_once('./twitteroauth/twitteroauth.php');
+require ('./livedoorWeatherJSONParser.php');
 
 class twitterPostSandbox {
 
@@ -13,30 +14,42 @@ class twitterPostSandbox {
     $dateString = '';
     $weekJapanese = array('日曜', '月曜', '火曜', '水曜', '木曜', '金曜', '土曜');
     $dateString = '【' . date('m/d') . ' ' . $weekJapanese[date('w')] . '】';
-    return $dateString;
+    return '【今日の天気】';
   }
 
   #テスト用アカウントをぶったたく
-  public function sandbox($AllorLatest, $contentName) {
-  $apiURL = 'https://api.twitter.com/1.1/statuses/update.json';
-  $twObj = new TwitterOAuth('WXxWaBi8w75HEXoYmAXRNg1Z6','w8q7eZtCnnKVg4YLZXjkAXO1LfrsXwuDMY7OqSNfvDnVe7WYzH','2468980268-Fcn699mDMJi5wJkTSMxPoQwgjubJf0BugxaTNH7','uBDLsLBrNTGeVTm0V6PMabJ3VvQc8QtTW9DrWgjO1iPWx');
+  public function sandbox($contentName) {
+    var_dump($contentName);
+    $apiURL = 'https://api.twitter.com/1.1/statuses/update.json';
+    $twObj = new TwitterOAuth('WXxWaBi8w75HEXoYmAXRNg1Z6','w8q7eZtCnnKVg4YLZXjkAXO1LfrsXwuDMY7OqSNfvDnVe7WYzH','2468980268-Fcn699mDMJi5wJkTSMxPoQwgjubJf0BugxaTNH7','uBDLsLBrNTGeVTm0V6PMabJ3VvQc8QtTW9DrWgjO1iPWx');
 
     //$source = $this->loadContent($AllorLatest, $contentName);
-    $tweetContentArray = $this->callProductionContentArrayGenerator($contentName);
-    $dateString = $this->dateStringer();
+    $tweetContentArray = $this->callLivedoorJSONContentreader($contentName);
+    //$tweetContentArray = $this->callProductionContentArrayGenerator($contentName);
+    //$dateString = $this->dateStringer();
     //$modifiedSource = $dateString . strip_tags($source[3]['title'] . ' ' . $source[3]['link']);
 
     for ($i = 0; $i < 3; $i++) {
       $tweetContent = $tweetContentArray[$i];
       var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
     }
-      //var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $modifiedSource))));
   }
 
   public function callProductionContentArrayGenerator($contentName) {
     $twitterPoster = new twitterPoster;
     $tweetDataString = $twitterPoster->tweetContentArrayGenerator($contentName);
     return $tweetDataString;
+  }
+
+  public function callLivedoorJSONContentreader($targetArea) {
+    var_dump($targetArea);
+    $array = array();
+    $livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
+    $dateString = $this->dateStringer();
+    var_dump($dateString);
+    $tweetString = $dateString . $livedoorWeatherJSONParser->jsonContentDiscriptionReader($targetArea);
+    array_push($array, $tweetString);
+    return $array;
   }
 
   #contentsSorterからコンテンツパースしたコンテンツを読み込む。
@@ -52,4 +65,5 @@ class twitterPostSandbox {
 }
 $twitterPostSandbox = new twitterPostSandbox;
 //$twitterPostSandbox->dateStringer();
-$twitterPostSandbox->sandbox('latest', 'aichi_nagoya');
+//$twitterPostSandbox->sandbox('aichi_nagoya');
+$twitterPostSandbox->sandbox('200010');

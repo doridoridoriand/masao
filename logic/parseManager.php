@@ -9,8 +9,8 @@ class parseManager {
     $parseList = $this->loadParseList();
 
     for ($i = 0; $i < count($parseList); $i++) {
-      $saveName = $parseList[$i][0];
-      $parseURL = $parseList[$i][1];
+      $saveName = $parseList[$i][1];
+      $parseURL = $parseList[$i][2];
 
       //xmlAutoParserのメソッドを呼び出し
       $parseXML = new parseXML;
