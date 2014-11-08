@@ -34,7 +34,7 @@ class livedoorWeatherJSONParser {
 
   //市町村コードとlivedoor天気予報APIの地点定義表との紐付けをおこなう。地点定義表はライブドアのRSSから読み取る
   //地点定義表の読み込みが読み込みに時間がかかるので、内部でオブジェクトとしてパース結果を保持する
-  private function areaMapper() {
+  public function areaMapper() {
     $spotDefinitionList = 'http://weather.livedoor.com/forecast/rss/primary_area.xml';
     $parseURLEncoded = file_get_contents($spotDefinitionList);
     $parsedSource = simplexml_load_string(preg_replace("/<([^>]+?):(.+?)>/", "<$1_$2>", $parseURLEncoded), 'SimpleXMLElement', LIBXML_NOCDATA);

@@ -7,7 +7,7 @@ class tsubuyakiManager {
 
   public function chiefManager($postContentSelectFlag) {
     if ($postContentSelectFlag == 'news') {
-      //$this->newsPoster();
+      $this->newsPoster();
     } else if ($postContentSelectFlag == 'weather') {
       $this->weatherPoster();
     }
@@ -20,7 +20,13 @@ class tsubuyakiManager {
 
     for ($i = 0; $i < count($source); $i++) {
       $twitterposter = new twitterPoster;
-      $twitterposter->poster($source[$i][0], $source[$i][1], $source[$i][2], $source[$i][3], $source[$i][4], NULL, 'news');
+      $twitterposter->poster($source[$i][0],
+                             $source[$i][1],
+                             $source[$i][2],
+                             $source[$i][3],
+                             $source[$i][4],
+                             NULL,
+                             'news');
     }
   }
 
@@ -30,13 +36,23 @@ class tsubuyakiManager {
     //var_dump($parseList);
     foreach ($parseList as $element) {
       //var_dump($element[0]);
-      $livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
-      $content = $livedoorWeatherJSONParser->jsonContentDiscriptionReader($element[0]);
+      // メモ
+      //　本来は市町村コードに基づいてAPIのエンドポイントを生成してJSONを読み取る様な実装にしていたけれど、
+      // レスポンスに時間が掛かるのと、本当に全部の天気がとれているのか確認できないので実装を変更。
+      // 元から実装してあったJSONをシリアライズ化して保存するのを利用して
+      //$livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
+      //$content = $livedoorWeatherJSONParser->jsonContentDiscriptionReader($element[0]);
 
       //var_dump($accountList);
       for ($i = 0; $i < count($accountList); $i++) {
         $twitterposter = new twitterPoster;
-        $twitterposter->poster($accountList[$i][0], $accountList[$i][1], $accountList[$i][2], $accountList[$i][3], $accountList[$i][4], $parseList[$i][0], 'weather');
+        $twitterposter->poster($accountList[$i][0],
+                               $accountList[$i][1],
+                               $accountList[$i][2],
+                               $accountList[$i][3],
+                               $accountList[$i][4],
+                               $parseList[$i][0],
+                               'weather');
       }
     }
   }
@@ -66,5 +82,5 @@ class tsubuyakiManager {
 }
 
 $tsubuyakiManager = new tsubuyakiManager;
-//$tsubuyakiManager->chiefManager('news');
-$tsubuyakiManager->chiefManager('weather');
+$tsubuyakiManager->chiefManager('news');
+//$tsubuyakiManager->chiefManager('weather');

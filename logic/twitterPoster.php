@@ -21,9 +21,9 @@ class twitterPoster {
     $tweetContent = $tweetContentArray[0];
     for ($i = 0; $i < 3; $i++) {
       $tweetContent = $tweetContentArray[$i];
-      var_dump($tweetContent);
-      var_dump($twObj);
-      //var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
+      //var_dump($tweetContent);
+      //var_dump($twObj);
+      var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
     }
   }
 
