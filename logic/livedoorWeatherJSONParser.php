@@ -15,16 +15,16 @@ class livedoorWeatherJSONParser {
     $sourceJSON = $this->loadWeatherJSON($this->generatePrimarySubdivisionAreaCode($targetCityNumber));
     $contentDescription = $sourceJSON->description->text;
     $contentLink = $sourceJSON->link;
-    $modifiedDescription = mb_substr($contentDescription, 0, 100, 'UTF-8') . '…';
+    $modifiedDescription = mb_substr($contentDescription, 0, 92, 'UTF-8') . '…';
 
     //var_dump( '【今日の天気】' . $modifiedDescription . " " . $contentLink);
-    return '【今日の天気】' . $modifiedDescription . " " . $contentLink;
+    return $modifiedDescription . " " . $contentLink;
   }
 
   //機械的に一次細分区域を生成。一次細分区域の番号に一部イレギュラーな部分があるので、これを条件分岐で処理する。
   //それ以上の細分化は今のところ対応できない
   private function generatePrimarySubdivisionAreaCode($targetCityNumber) {
-    
+
     $prefectureNumber = substr($targetCityNumber, 0, strlen($targetCityNumber) - 4);
 
     switch ($prefectureNumber) {
