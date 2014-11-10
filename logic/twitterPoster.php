@@ -15,6 +15,7 @@ class twitterPoster {
                          $sAccessTokenSecret,
                          $targetArea,
                          $contentVariety) {
+
     $apiURL = 'https://api.twitter.com/1.1/statuses/update.json';
 
     if ($contentVariety == 'news') {
@@ -22,13 +23,17 @@ class twitterPoster {
     } else if ($contentVariety == 'weather') {
       $tweetContentArray = $this->livedoorJSONContentreader($targetArea);
     }
-    $twObj = $this->twitterConfigure($sConsumerKey, $sConsumerSecret, $sAccessToken, $sAccessTokenSecret);
-    $tweetContent = $tweetContentArray[0];
+    $twObj = $this->twitterConfigure($sConsumerKey,
+                                     $sConsumerSecret,
+                                     $sAccessToken,
+                                     $sAccessTokenSecret);
+
     for ($i = 0; $i < 3; $i++) {
       $tweetContent = $tweetContentArray[$i];
-      //var_dump($tweetContent[0]);
-      //var_dump($twObj);
-      var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
+      var_dump($tweetContent);
+      var_dump($twObj);
+      //var_dump(json_decode($twObj->OAuthRequest($apiURL,"POST",array("status" => $tweetContent))));
+
     }
   }
 
@@ -36,11 +41,12 @@ class twitterPoster {
     //var_dump($targetArea);
     $array = array();
     $livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
-    // 日付をつぶやかない事にしたので、ひとまずコメントアウト
-    //$dateString = $this->dateStringer();
+    $dateString = $this->dateStringer();
+    // dateStringer()はカッコをつけた状態で値を返してくるので、こちらでカッコを取るプロセスを挟む
+    $modifiedDateString = str_replace('【', '', str_replace('】', '', $dateString));
     $tweetString = $livedoorWeatherJSONParser->jsonContentDiscriptionReader($targetArea);
-    array_push($array, $tweetString);
-    var_dump($array);
+    array_push($array, '【今日の天気：' . $modifiedDateString . '】' . $tweetString);
+    //var_dump($array);
     return $array;
   }
 
@@ -90,7 +96,7 @@ class twitterPoster {
 
   private function dateStringer() {
     $dateString = '';
-    $weekJapanese = array('日曜', '月曜', '火曜', '水曜', '木曜', '金曜', '土曜');
+    $weekJapanese = array('日', '月', '火', '水', '木', '金', '土');
     $dateString = '【' . date('m/d') . $weekJapanese[date('w')] . '】';
     return $dateString;
   }
