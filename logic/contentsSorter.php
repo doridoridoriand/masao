@@ -4,13 +4,13 @@
 
 class contentReader {
 
-  /* unSerializeより受け取ったファイルの内容全てをHTMLに変換する
+  /* unserialize()のラッパー
    */
   public function allContent($contentName) {
     return $this->unserialize($contentName);
   }
 
-  /* findLatestContent()より受け取った最新記事をHTMLに変換する
+  /* findLatestContent()のラッパー
    */
   public function latestContent($contentName) {
     return $this->findLatestContent($contentName);

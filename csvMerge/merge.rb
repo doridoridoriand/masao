@@ -18,8 +18,8 @@ class CSVMerger
     generated_array = []
     generated_array_element = []
 
-    for i in 0..(parseList.count.to_i - 1)
-      for j in 0..(accountList.count.to_i - 1)
+    for i in 0..(parseList.count.to_i)
+      for j in 0..(accountList.count.to_i)
         if (parseList[i][1] == accountList[j][0])
           generated_array_element.concat(parseList[i]).concat(accountList[j])
           generated_array << generated_array_element.pop(8).uniq!

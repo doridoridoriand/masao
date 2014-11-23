@@ -16,15 +16,16 @@ class tsubuyakiManager {
   //acocuntList.csvからつぶやくのに必要な$sConsumerKey,$sConsumerSecret,$sAccessToken,$sAccessTokenSecretを
   //読みとり、さらにコンテンツ名を読み取って、poster関数に入れる
   private function newsPoster() {
-    $source = $this->loadAccountList();
 
-    for ($i = 0; $i < count($source); $i++) {
+    $masterList = $this->loadMasterAccountList();
+
+    for ($i = 0; $i < count($masterList); $i++) {
       $twitterposter = new twitterPoster;
-      $twitterposter->poster($source[$i][0],
-                             $source[$i][1],
-                             $source[$i][2],
-                             $source[$i][3],
-                             $source[$i][4],
+      $twitterposter->poster($masterList[$i][1],
+                             $masterList[$i][3],
+                             $masterList[$i][4],
+                             $masterList[$i][5],
+                             $masterList[$i][6],
                              NULL,
                              'news');
     }
@@ -43,10 +44,10 @@ class tsubuyakiManager {
       //var_dump($element[0]);
 
       // メモ
-      //　本来は市町村コードに基づいてAPIのエンドポイントを生成してJSONを読み取る様な実装にしていたけれど、
+      // 本来は市町村コードに基づいてAPIのエンドポイントを生成してJSONを読み取る様な実装にしていたけれど、
       // レスポンスに時間が掛かるのと、本当に全部の天気がとれているのか確認できないので実装を変更。
       // 元から実装してあったJSONをシリアライズ化して保存するのを利用してシリアライズしたファイルを読み込んで
-      //　配信する方式に変更。要するに今のニュースの配信と同じ方法
+      // 配信する方式に変更。要するに今のニュースの配信と同じ方法
 
       // OLD CODE
       //$livedoorWeatherJSONParser = new livedoorWeatherJSONParser;
