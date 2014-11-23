@@ -19,7 +19,7 @@ class tsubuyakiManager {
 
     $masterList = $this->loadMasterAccountList();
 
-    for ($i = 0; $i < count($source); $i++) {
+    for ($i = 0; $i < count($masterList); $i++) {
       $twitterposter = new twitterPoster;
       $twitterposter->poster($masterList[$i][1],
                              $masterList[$i][3],
