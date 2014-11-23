@@ -132,5 +132,5 @@ class livedoorWeatherParser extends livedoorWeatherJSONParser {
 $livedoorWeatherParser = new livedoorWeatherParser;
 //$livedoorWeatherParser->chiefManager('spotdefinition', '440030');
 //$livedoorWeatherParser->chiefManager('disaster', 'volucano');
-$livedoorWeatherParser->chiefManager('allspotdefinition', NULL);
+//$livedoorWeatherParser->chiefManager('allspotdefinition', NULL);
 //$livedoorWeatherParser->chiefManager('alldisaster', NULL);
