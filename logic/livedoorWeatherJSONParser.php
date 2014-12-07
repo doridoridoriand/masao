@@ -37,6 +37,9 @@ class livedoorWeatherJSONParser {
       case 47:
         $targetAreaCode = $prefectureNumber . '1010';
         break;
+      case 37:
+        $targetAreaCode = $prefectureNumber . '0000';
+        break;
       default:
         $targetAreaCode = $prefectureNumber . '0010';
         break;
