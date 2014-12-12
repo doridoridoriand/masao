@@ -95,6 +95,7 @@ class twitterPoster {
   }
 
   private function dateStringer() {
+    date_default_timezone_set('Asia/Tokyo');
     $dateString = '';
     $weekJapanese = array('日', '月', '火', '水', '木', '金', '土');
     $dateString = '【' . date('m/d') . $weekJapanese[date('w')] . '】';

@@ -23,6 +23,7 @@ class contentReader {
   @return 条件に合致した要素を含んだ配列
    */
   private function findLatestContent($contentName) {
+    date_default_timezone_set('Asia/Tokyo');
     $contentData = $this->unSerializer($contentName);
     $latestContetnArray = array();
 
